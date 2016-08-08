@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import com.xiaohuijun.administrator.mymvp.R;
 import com.xiaohuijun.administrator.mymvp.common.Glide.ImageLoader;
+import com.xiaohuijun.administrator.mymvp.common.RxBus.RxBus;
+import com.xiaohuijun.administrator.mymvp.common.RxBus.RxBusSubscriber;
+import com.xiaohuijun.administrator.mymvp.common.RxBus.helper.RxSubscriptions;
 import com.xiaohuijun.administrator.mymvp.common.util.MLog;
 import com.xiaohuijun.administrator.mymvp.common.util.PermissionUtils;
 import com.xiaohuijun.administrator.mymvp.data.RepositoryFactory;
@@ -25,6 +28,8 @@ import com.xiaohuijun.administrator.mymvp.ui.module.common.FullImageActivity;
 import com.xiaohuijun.administrator.progressdialog.svprogresshud.SVProgressHUD;
 
 import butterknife.BindView;
+import rx.Subscription;
+import rx.functions.Func1;
 
 public class MainActivity extends MvpActivity implements LceView<Object>,InitInterface{
     UserPresenter userPresenter;
@@ -39,6 +44,11 @@ public class MainActivity extends MvpActivity implements LceView<Object>,InitInt
     @BindView(R.id.test)
     Button test;
     SVProgressHUD progress;
+    @BindView(R.id.test_rxbus)
+    Button test_rxbus;
+    @BindView(R.id.rxbus_text)
+    TextView rxbus_text;
+    private Subscription mRxSub, mRxSubSticky;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +89,14 @@ public class MainActivity extends MvpActivity implements LceView<Object>,InitInt
                     }
                 },R.string.rationale_camera);
 
+            }
+        });
+
+        test_rxbus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent in = new Intent(MainActivity.this,Main2Activity.class);
+                startActivity(in);
             }
         });
     }
@@ -125,6 +143,60 @@ public class MainActivity extends MvpActivity implements LceView<Object>,InitInt
         MLog.e(e);
     }
 
+    public void subEvent(){
+        RxSubscriptions.remove(mRxSub);
+        mRxSub = RxBus.getDefault().toObservable(Bundle.class)
+                .map(new Func1<Bundle, Bundle>() {
+                    @Override
+                    public Bundle call(Bundle bundle) {
+                        return bundle;
+                    }
+                }).subscribe(new RxBusSubscriber<Bundle>() {
+                    @Override
+                    protected void onEvent(Bundle bundle) {
+                        rxbus_text.setText(bundle.getString("event"));
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        /**
+                         * 这里注意: 一旦订阅过程中发生异常,走到onError,则代表此次订阅事件完成,后续将收不到onNext()事件,
+                         * 即 接受不到后续的任何事件,实际环境中,我们需要在onError里 重新订阅事件!
+                         */
+                        subEvent();
+                    }
+                });
+        RxSubscriptions.add(mRxSub);
+    }
+
+    public void  subEventSticky(){
+        //RxSubscriptions.remove(mRxSubSticky);
+        mRxSubSticky = RxBus.getDefault().toObservableSticky(Bundle.class)
+                .map(new Func1<Bundle, Bundle>() {
+                    @Override
+                    public Bundle call(Bundle bundle) {
+                        return bundle;
+                    }
+                }).subscribe(new RxBusSubscriber<Bundle>() {
+                    @Override
+                    protected void onEvent(Bundle bundle) {
+                        rxbus_text.setText(bundle.getString("event_sticky"));
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                    }
+                });
+        RxSubscriptions.add(mRxSubSticky);
+    }
 
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        RxSubscriptions.remove(mRxSub);
+        RxSubscriptions.remove(mRxSubSticky);
+    }
 }

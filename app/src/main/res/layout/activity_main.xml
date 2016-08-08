@@ -35,4 +35,16 @@
         android:layout_height="50dp"
         android:text="@string/app_name"
         android:layout_below="@+id/phone"/>
+    <Button android:id="@+id/test_rxbus"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="test_rxbus"
+        android:layout_below="@+id/test"/>
+    <TextView
+        android:id="@+id/rxbus_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/test_rxbus"
+        android:layout_centerHorizontal="true"
+        android:textSize="20sp"/>
 </RelativeLayout>
