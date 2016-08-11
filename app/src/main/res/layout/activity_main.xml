@@ -46,5 +46,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/test_rxbus"
         android:layout_centerHorizontal="true"
+        android:text="rxbus_text"
         android:textSize="20sp"/>
 </RelativeLayout>

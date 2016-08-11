@@ -19,6 +19,8 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+        event_text.setOnClickListener(this);
+        event_sticky_text.setOnClickListener(this);
     }
 
     @Override
@@ -27,10 +29,12 @@ public class Main2Activity extends BaseActivity implements View.OnClickListener{
            Bundle bundle = new Bundle();
            bundle.putString("event","event");
            RxBus.getDefault().post(bundle);
+           finish();
        }else if(view.getId() == R.id.event_sticky_text){
            Bundle bundle = new Bundle();
            bundle.putString("event_sticky","event_sticky");
            RxBus.getDefault().postSticky(bundle);
+           finish();
        }
     }
 }
