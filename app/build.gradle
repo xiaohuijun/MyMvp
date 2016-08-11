@@ -38,7 +38,7 @@ android {
             minifyEnabled false
             zipAlignEnabled false
             shrinkResources false
- //           signingConfig signingConfigs.debug
+            //           signingConfig signingConfigs.debug
         }
         release {
             // 不显示Log
@@ -52,7 +52,7 @@ android {
             //加载默认混淆配置文件 progudard-android.txt在sdk目录里面，不用管，proguard.cfg是我们自己配<span></span>的混淆文件
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard.cfg'
             //签名
- //          signingConfig signingConfigs.relealse
+            //          signingConfig signingConfigs.relealse
         }
     }
 //渠道Flavors，我这里写了一些常用的
@@ -87,6 +87,8 @@ android {
         compile 'com.android.support:design:24.0.0'
         compile 'com.android.support:support-v4:24.0.0'
         compile 'com.android.support:appcompat-v7:24.0.0'
+        compile "org.projectlombok:lombok:1.12.6"
+        compile 'com.android.databinding:baseLibrary:2.1.2'
         compile 'com.android.support:recyclerview-v7:24.0.0'
         compile 'com.android.support:cardview-v7:24.0.0'
 

@@ -3,22 +3,21 @@ package com.xiaohuijun.administrator.mymvp.ui.module.common;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
-import com.bm.library.PhotoView;
 import com.xiaohuijun.administrator.mymvp.R;
-import com.xiaohuijun.administrator.mymvp.common.Glide.ImageLoader;
 import com.xiaohuijun.administrator.mymvp.common.util.AppUtils;
-import com.xiaohuijun.administrator.mymvp.ui.adapter.BasePageAdapter;
+import com.xiaohuijun.administrator.mymvp.ui.adapter.CommonPagerAdapter;
+import com.xiaohuijun.administrator.mymvp.ui.adapter.item.AdapterItem;
 
 import java.util.ArrayList;
 
@@ -27,7 +26,7 @@ public class FullImageActivity extends Activity {
 	private Context context;
 	private int position;
 	private String picUrl;
-	private ArrayList<View> listViews;
+	private ArrayList<String> urls;
 	private ImageView[] imageViews;
 	private ImageView ivPoint;
 
@@ -46,31 +45,23 @@ public class FullImageActivity extends Activity {
 
 	private void initView() {
 		ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
-		listViews = new ArrayList<View>();
+		urls = new ArrayList<String>();
 		LayoutInflater inflater = getLayoutInflater();
 
 		if (picUrl != null) {
 			if (picUrl.contains(",")) {
-				final String split[] = picUrl.split(",");
+				String split[] = picUrl.split(",");
 				for (int i = 0; i < split.length; i++) {
-					View v = inflater.inflate(R.layout.full_image_item, null);
-					final PhotoView img = (PhotoView) v.findViewById(R.id.iv_full_image);
-					setPhotoViewConfig(img);
-					ImageLoader.Load(FullImageActivity.this,split[i],img,R.mipmap.ic_launcher);
-					listViews.add(v);
+					urls.add(split[i]);
 				}
 			} else {
-				View v = inflater.inflate(R.layout.full_image_item, null);
-				PhotoView img = (PhotoView) v.findViewById(R.id.iv_full_image);
-				setPhotoViewConfig(img);
-				ImageLoader.Load(FullImageActivity.this,picUrl,img,R.mipmap.ic_launcher);
-				listViews.add(v);
+				urls.add(picUrl);
 			}
 		}
 
 		LinearLayout linearPoint = (LinearLayout) findViewById(R.id.linear_point);
-		imageViews = new ImageView[listViews.size()];
-		for (int i = 0; i < listViews.size(); i++) {
+		imageViews = new ImageView[urls.size()];
+		for (int i = 0; i < urls.size(); i++) {
 			ivPoint = new ImageView(context);
 			ivPoint.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
 					LayoutParams.WRAP_CONTENT));
@@ -94,7 +85,13 @@ public class FullImageActivity extends Activity {
 			linearPoint.addView(ivPoint);
 		}
 
-		viewPager.setAdapter(new BasePageAdapter(listViews));
+		viewPager.setAdapter(new CommonPagerAdapter<String>(urls,true) {
+			@NonNull
+			@Override
+			public AdapterItem createItem(Object type) {
+				return new FullImageItem(FullImageActivity.this);
+			}
+		});
 		viewPager.setOnPageChangeListener(new OnPageChangeListener() {
 
 			@Override
@@ -126,34 +123,5 @@ public class FullImageActivity extends Activity {
 			finish();
 		}
 		return super.onKeyDown(keyCode, event);
-	}
-
-
-	private void setPhotoViewConfig(PhotoView photoView){
-		// 启用图片缩放功能
-		photoView.enable();
-		// 禁用图片缩放功能 (默认为禁用，会跟普通的ImageView一样，缩放功能需手动调用enable()启用)
-		//photoView.disenable();
-		// 获取图片信息
-		//Info info = photoView.getInfo();
-		// 从普通的ImageView中获取Info
-		//Info info = PhotoView.getImageViewInfo(ImageView);
-		// 从一张图片信息变化到现在的图片，用于图片点击后放大浏览，具体使用可以参照demo的使用
-		//photoView.animaFrom(info);
-		// 从现在的图片变化到所给定的图片信息，用于图片放大后点击缩小到原来的位置，具体使用可以参照demo的使用
-		//photoView.animaTo(info,new Runnable() {
-		//	@Override
-		//	public void run() {
-		//		//动画完成监听
-		//	}
-		//});
-		// 获取/设置 动画持续时间
-		//photoView.setAnimaDuring(200);
-		//int d = photoView.getAnimaDuring();
-		// 获取/设置 最大缩放倍数
-		//photoView.setMaxScale(2);
-		//float maxScale = photoView.getMaxScale();
-		// 设置动画的插入器
-		//photoView.setInterpolator(interpolator);
 	}
 }
