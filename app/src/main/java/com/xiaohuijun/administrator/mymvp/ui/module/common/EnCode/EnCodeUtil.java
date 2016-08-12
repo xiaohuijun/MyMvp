@@ -2,6 +2,7 @@ package com.xiaohuijun.administrator.mymvp.ui.module.common.EnCode;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.support.v4.content.ContextCompat;
 
 import com.google.zxing.client.result.ParsedResultType;
 import com.mylhyl.zxing.scanner.ScannerView;
@@ -22,7 +23,7 @@ public class EnCodeUtil {
     public static Bitmap getEnCode(Context context) {
         Bitmap bitmap = QREncode.encodeQR(context,
                 new QREncode.Builder()
-                        .setColor(context.getResources().getColor(R.color.colorPrimary))//二维码颜色
+                        .setColor(ContextCompat.getColor(context,R.color.colorPrimary))//二维码颜色
                         .setParsedResultType(ParsedResultType.URI)//二维码类型
                         .setContents("https://github.com/mylhyl")//二维码内容
                         .build());

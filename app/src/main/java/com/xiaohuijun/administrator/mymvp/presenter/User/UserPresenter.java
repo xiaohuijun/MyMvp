@@ -39,7 +39,7 @@ public class UserPresenter<V extends LceView> implements MvpPresenter<V>{
         body = RequestParams.getRequestParams(body);
         mView.showLoading();
         mSubscriptions.add(dataSource.getUserList(body)
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnTerminate(new Action0() {
                     @Override
