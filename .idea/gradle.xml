@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/alertview" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/progressdialog" />
+            <option value="$PROJECT_DIR$/social_sdk_library_project" />
           </set>
         </option>
         <option name="myModules">
@@ -20,6 +21,7 @@
             <option value="$PROJECT_DIR$/alertview" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/progressdialog" />
+            <option value="$PROJECT_DIR$/social_sdk_library_project" />
           </set>
         </option>
       </GradleProjectSettings>
