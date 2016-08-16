@@ -88,6 +88,7 @@ android {
         compile 'com.android.support:design:24.0.0'
         compile 'com.android.support:support-v4:24.0.0'
         compile 'com.android.support:appcompat-v7:24.0.0'
+        
         compile "org.projectlombok:lombok:1.12.6"
         compile 'com.android.databinding:baseLibrary:2.1.2'
         compile 'com.android.support:recyclerview-v7:24.0.0'
