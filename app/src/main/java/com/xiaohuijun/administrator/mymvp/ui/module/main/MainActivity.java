@@ -1,6 +1,5 @@
 package com.xiaohuijun.administrator.mymvp.ui.module.main;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.Gravity;
@@ -14,6 +13,7 @@ import com.xiaohuijun.administrator.mymvp.common.Glide.ImageLoader;
 import com.xiaohuijun.administrator.mymvp.common.RxBus.RxBus;
 import com.xiaohuijun.administrator.mymvp.common.RxBus.RxBusSubscriber;
 import com.xiaohuijun.administrator.mymvp.common.RxBus.helper.RxSubscriptions;
+import com.xiaohuijun.administrator.mymvp.common.util.ActivityUtils;
 import com.xiaohuijun.administrator.mymvp.common.util.MLog;
 import com.xiaohuijun.administrator.mymvp.common.util.PermissionUtils;
 import com.xiaohuijun.administrator.mymvp.data.RepositoryFactory;
@@ -96,8 +96,9 @@ public class MainActivity extends MvpActivity implements LceView<Object>,InitInt
         test_rxbus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent in = new Intent(MainActivity.this,Main2Activity.class);
-                startActivity(in);
+                ActivityUtils.from(MainActivity.this)
+                        .gotoTargetActivity(Main2Activity.class)
+                        .go();
             }
         });
     }
@@ -127,10 +128,11 @@ public class MainActivity extends MvpActivity implements LceView<Object>,InitInt
                 userIcon.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent in = new Intent(MainActivity.this, FullImageActivity.class);
-                        in.putExtra("position","1");
-                        in.putExtra("picUrl",userInfo.userIco);
-                        startActivity(in);
+                        ActivityUtils.from(MainActivity.this)
+                                .gotoTargetActivity(FullImageActivity.class)
+                                .putExtra("position","1")
+                                .putExtra("picUrl",userInfo.userIco)
+                                .go();
                     }
                 });
                 ImageLoader.load(MainActivity.this,userInfo.userIco,userIcon,R.mipmap.ic_launcher);

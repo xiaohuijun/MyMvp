@@ -1,8 +1,9 @@
 package com.xiaohuijun.administrator.mymvp.ui.module.startup;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
+
+import com.xiaohuijun.administrator.mymvp.common.util.ActivityUtils;
 
 /**
  * 秒开loading页
@@ -14,7 +15,9 @@ public class LoadingActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        startActivity(new Intent(LoadingActivity.this, GuideActivity.class));
+        ActivityUtils.from(LoadingActivity.this)
+        .gotoTargetActivity(GuideActivity.class)
+        .go();
         finish();
     }
 }
