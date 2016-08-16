@@ -2,6 +2,7 @@ package com.xiaohuijun.administrator.mymvp.common.util;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 
@@ -43,6 +44,37 @@ public class ActivityUtils {
 
     public void goForResult(int requestCode){
         activity.startActivityForResult(in,requestCode);
+    }
+
+
+    public ActivityUtils setAction(String action){
+        in.setAction(action);
+        return instance;
+    }
+
+    public ActivityUtils setData(Uri data){
+        in.setData(data);
+        return instance;
+    }
+
+    public ActivityUtils setDataAndType(Uri data,String type){
+        in.setDataAndType(data,type);
+        return instance;
+    }
+
+    public ActivityUtils setFlags(int flags){
+        in.setFlags(flags);
+        return instance;
+    }
+
+    public ActivityUtils addFlags(int flags){
+        in.addFlags(flags);
+        return instance;
+    }
+
+    public ActivityUtils addCategory(String category){
+        in.addCategory(category);
+        return instance;
     }
 
     public ActivityUtils putExtra(String name, boolean value) {
