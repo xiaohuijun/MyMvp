@@ -14,6 +14,9 @@
     <string name="returned_from_app_settings_to_activity">Returned from app settings to MainActivity</string>
     <string name="has_read_sms_permission">Has read sms permission: %b</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
+    <string name="all_images">All Images</string>
+    <string name="done">Done</string>
+    <string name="no_files_found">No Files Found</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

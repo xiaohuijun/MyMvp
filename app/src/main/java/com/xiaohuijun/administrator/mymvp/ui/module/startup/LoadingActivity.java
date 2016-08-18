@@ -6,6 +6,7 @@ import android.os.Handler;
 
 import com.xiaohuijun.administrator.mymvp.R;
 import com.xiaohuijun.administrator.mymvp.common.util.ActivityUtils;
+import com.xiaohuijun.administrator.mymvp.ui.module.main.MainActivity;
 
 /**
  * 秒开loading页
@@ -22,12 +23,12 @@ public class LoadingActivity extends Activity{
             @Override
             public void run() {
                 ActivityUtils.from(LoadingActivity.this)
-                        .gotoTargetActivity(GuideActivity.class)
+                        .gotoTargetActivity(MainActivity.class)
                         .go();
                 finish();
                 overridePendingTransition(R.anim.stand,R.anim.splash);
             }
-        },500);
+        },1);
 
     }
 }

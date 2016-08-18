@@ -1,5 +1,6 @@
 package com.xiaohuijun.administrator.mymvp.ui.module.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.Gravity;
@@ -7,8 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.xiaohuijun.administrator.mymvp.R;
+import com.xiaohuijun.administrator.mymvp.common.Filepicker.FilePickerConst;
+import com.xiaohuijun.administrator.mymvp.common.Filepicker.FileSelectUtils;
 import com.xiaohuijun.administrator.mymvp.common.Glide.ImageLoader;
 import com.xiaohuijun.administrator.mymvp.common.RxBus.RxBus;
 import com.xiaohuijun.administrator.mymvp.common.RxBus.RxBusSubscriber;
@@ -26,6 +28,8 @@ import com.xiaohuijun.administrator.mymvp.ui.InitInterface;
 import com.xiaohuijun.administrator.mymvp.ui.RequestPermssionCallBack;
 import com.xiaohuijun.administrator.mymvp.ui.module.common.FullImageActivity;
 import com.xiaohuijun.administrator.progressdialog.svprogresshud.SVProgressHUD;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import rx.Subscription;
@@ -48,7 +52,12 @@ public class MainActivity extends MvpActivity implements LceView<Object>,InitInt
     Button test_rxbus;
     @BindView(R.id.rxbus_text)
     TextView rxbus_text;
+    @BindView(R.id.choose_photo_btn)
+    Button chooseImgBtn;
+    @BindView(R.id.choose_doc_btn)
+    Button chooseDocBtn;
     private Subscription mRxSub, mRxSubSticky;
+    private ArrayList<String> filePaths;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +108,42 @@ public class MainActivity extends MvpActivity implements LceView<Object>,InitInt
                 ActivityUtils.from(MainActivity.this)
                         .gotoTargetActivity(Main2Activity.class)
                         .go();
+            }
+        });
+
+        chooseImgBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String[] perms = {PermissionUtils.STORAGE};
+                needPermssionTask(PermissionUtils.getPermissions(perms), new RequestPermssionCallBack() {
+                    @Override
+                    public void permissionsGranted() {
+                        FileSelectUtils.selectPhoto(filePaths,3,MainActivity.this);
+                    }
+
+                    @Override
+                    public void permissionsDenied() {
+                        toastShow("授权失败,do something");
+                    }
+                },R.string.rationale_camera);
+
+            }
+        });
+        chooseDocBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String[] perms = {PermissionUtils.STORAGE};
+                needPermssionTask(PermissionUtils.getPermissions(perms), new RequestPermssionCallBack() {
+                    @Override
+                    public void permissionsGranted() {
+                        FileSelectUtils.selectDocument(filePaths,3,MainActivity.this);
+                    }
+
+                    @Override
+                    public void permissionsDenied() {
+                        toastShow("授权失败,do something");
+                    }
+                },R.string.rationale_camera);
             }
         });
     }
@@ -202,5 +247,21 @@ public class MainActivity extends MvpActivity implements LceView<Object>,InitInt
         super.onDestroy();
         RxSubscriptions.remove(mRxSub);
         RxSubscriptions.remove(mRxSubSticky);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode)
+        {
+            case FilePickerConst.REQUEST_CODE:
+                if(resultCode==RESULT_OK && data!=null)
+                {
+                    filePaths = data.getStringArrayListExtra(FilePickerConst.KEY_SELECTED_PHOTOS);
+                    //use them anywhere
+                    MLog.d(filePaths.size());
+                }
+        }
     }
 }

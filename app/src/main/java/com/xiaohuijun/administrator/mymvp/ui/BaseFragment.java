@@ -85,7 +85,7 @@ public class BaseFragment extends Fragment implements EasyPermissions.Permission
         if (requestCode == EasyPermissions.SETTINGS_REQ_CODE) {
             // Do something after user returned from app settings screen
             // Let's show Toast for example
-            if(perms!=null && hasPermissions!=null && EasyPermissions.hasPermissions(getContext(),perms)){
+            if(perms!=null && hasPermissions!=null && EasyPermissions.hasPermissions(getActivity(),perms)){
                 hasPermissions.permissionsGranted();
             }else{
                 hasPermissions.permissionsDenied();
@@ -98,7 +98,7 @@ public class BaseFragment extends Fragment implements EasyPermissions.Permission
     public void needPermssionTask(String[] perms,RequestPermssionCallBack requestPermssionCallBack,int resId){
         this.perms = perms;
         this.hasPermissions = requestPermssionCallBack;
-        if (EasyPermissions.hasPermissions(getContext(), perms)) {
+        if (EasyPermissions.hasPermissions(getActivity(), perms)) {
             // Have permissions, do the thing!
             hasPermissions.permissionsGranted();
         } else {
@@ -132,7 +132,7 @@ public class BaseFragment extends Fragment implements EasyPermissions.Permission
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Let's show a toast
-                Toast.makeText(getContext(), R.string.settings_dialog_canceled, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.settings_dialog_canceled, Toast.LENGTH_SHORT).show();
             }
         };
         // (Optional) Check whether the user denied permissions and checked NEVER ASK AGAIN.
