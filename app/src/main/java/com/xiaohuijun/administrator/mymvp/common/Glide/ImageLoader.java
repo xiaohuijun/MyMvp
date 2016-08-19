@@ -2,6 +2,7 @@ package com.xiaohuijun.administrator.mymvp.common.Glide;
 
 import android.app.Activity;
 import android.content.Context;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.widget.ImageView;
 
@@ -36,6 +37,38 @@ public class ImageLoader {
 
     }
 
+    /**
+     * Load Image
+     *
+     * @param context
+     * @param uri
+     * @param view
+     */
+    public static void load(Context context, Uri uri, ImageView view,int width,int height) {
+        Glide.with(context)
+                .load(uri)
+                .thumbnail(0.1f)//请求给定系数的缩略图
+                .diskCacheStrategy(DiskCacheStrategy.ALL)//设置缓存策略。DiskCacheStrategy.SOURCE：缓存原始数据，DiskCacheStrategy.RESULT：缓存变换(如缩放、裁剪等)后的资源数据，DiskCacheStrategy.NONE：什么都不缓存，DiskCacheStrategy.ALL：缓存SOURC和RESULT。默认采用DiskCacheStrategy.RESULT策略，对于download only操作要使用DiskCacheStrategy.SOURCE。
+                .override(width,height)
+                .into(view);
+
+    }
+
+    /**
+     * Load Image
+     *
+     * @param context
+     * @param resouceid
+     * @param view
+     */
+    public static void load(Context context, int resouceid, ImageView view) {
+        Glide.with(context)
+                .load(resouceid)
+                .thumbnail(0.1f)//请求给定系数的缩略图
+                .diskCacheStrategy(DiskCacheStrategy.ALL)//设置缓存策略。DiskCacheStrategy.SOURCE：缓存原始数据，DiskCacheStrategy.RESULT：缓存变换(如缩放、裁剪等)后的资源数据，DiskCacheStrategy.NONE：什么都不缓存，DiskCacheStrategy.ALL：缓存SOURC和RESULT。默认采用DiskCacheStrategy.RESULT策略，对于download only操作要使用DiskCacheStrategy.SOURCE。
+                .into(view);
+
+    }
     /**
      *
      * @param activity

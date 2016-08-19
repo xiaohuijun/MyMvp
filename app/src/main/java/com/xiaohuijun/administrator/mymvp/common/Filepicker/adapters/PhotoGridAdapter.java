@@ -10,12 +10,12 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.bm.library.PhotoView;
 import com.xiaohuijun.administrator.mymvp.R;
 import com.xiaohuijun.administrator.mymvp.common.Filepicker.PickerManager;
 import com.xiaohuijun.administrator.mymvp.common.Filepicker.models.Photo;
-import com.xiaohuijun.administrator.mymvp.common.Filepicker.utils.image.FrescoFactory;
 import com.xiaohuijun.administrator.mymvp.common.Filepicker.views.SmoothCheckBox;
+import com.xiaohuijun.administrator.mymvp.common.Glide.ImageLoader;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -56,8 +56,8 @@ public class PhotoGridAdapter extends SelectableAdapter<PhotoGridAdapter.PhotoVi
 
       final Photo photo = getItems().get(position-1);
 
-      FrescoFactory.getLoader().showImage(holder.imageView, Uri.fromFile(new File(photo.getPath())), FrescoFactory.newOption(imageSize, imageSize));
-
+      //FrescoFactory.getLoader().showImage(holder.imageView, Uri.fromFile(new File(photo.getPath())), FrescoFactory.newOption(imageSize, imageSize));
+      ImageLoader.load(context, Uri.fromFile(new File(photo.getPath())),holder.imageView, imageSize, imageSize);
       holder.itemView.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -76,6 +76,7 @@ public class PhotoGridAdapter extends SelectableAdapter<PhotoGridAdapter.PhotoVi
         @Override
         public void onClick(View v) {
           if (!holder.checkBox.isChecked() && !PickerManager.getInstance().shouldAdd()) {
+            Toast.makeText(context,"最多只能选择"+PickerManager.getInstance().getMaxCount()+"张图片",Toast.LENGTH_SHORT).show();
             return;
           }
         }
@@ -101,7 +102,8 @@ public class PhotoGridAdapter extends SelectableAdapter<PhotoGridAdapter.PhotoVi
     }
     else
     {
-      FrescoFactory.getLoader().showImage(holder.imageView,R.mipmap.ic_camera,null);
+      //FrescoFactory.getLoader().showImage(holder.imageView,R.mipmap.ic_camera,null);
+      ImageLoader.load(context,R.mipmap.ic_camera,holder.imageView);
       holder.checkBox.setVisibility(View.GONE);
       holder.itemView.setOnClickListener(cameraOnClickListener);
     }
@@ -129,14 +131,14 @@ public class PhotoGridAdapter extends SelectableAdapter<PhotoGridAdapter.PhotoVi
 
       SmoothCheckBox checkBox;
 
-      SimpleDraweeView imageView;
+      PhotoView imageView;
 
       View selectBg;
 
     public PhotoViewHolder(View itemView) {
       super(itemView);
       checkBox = (SmoothCheckBox) itemView.findViewById(R.id.checkbox);
-      imageView = (SimpleDraweeView) itemView.findViewById(R.id.iv_photo);
+      imageView = (PhotoView) itemView.findViewById(R.id.iv_photo);
       selectBg = itemView.findViewById(R.id.transparent_bg);
     }
   }

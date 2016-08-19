@@ -1,1 +1,1 @@
-include ':app', ':alertview', ':progressdialog', 'alertview', ':social_sdk_library_project', 'filepicker'
+include ':app', ':alertview', ':progressdialog', 'alertview', ':social_sdk_library_project'
