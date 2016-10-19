@@ -3,6 +3,7 @@ package com.xiaohuijun.administrator.mymvp;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDex;
 
 import com.umeng.socialize.PlatformConfig;
 

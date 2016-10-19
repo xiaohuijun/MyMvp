@@ -162,7 +162,7 @@
 
         <!-- 微信平台 -->
         <activity
-            android:name=".weixin.wxapi.WXEntryActivity"
+            android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
@@ -170,7 +170,7 @@
 
         <!-- 新浪微博 -->
         <activity
-            android:name=".sina.WBShareActivity"
+            android:name=".WBShareActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -192,7 +192,7 @@
         </service>
         <!-- 支付宝 -->
         <activity
-            android:name=".alipay.ShareEntryActivity"
+            android:name=".apshare.ShareEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"

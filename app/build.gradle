@@ -84,12 +84,13 @@ android {
         compile project(':alertview')
         compile project(':progressdialog')
         compile project(':um_sdk_library_project')
+        compile project(':live_play_library')
         testCompile 'junit:junit:4.12'
         compile 'com.android.support:multidex:1.0.1'
         compile 'com.android.support:design:24.0.0'
         compile 'com.android.support:support-v4:24.0.0'
         compile 'com.android.support:appcompat-v7:24.0.0'
-        
+
         compile "org.projectlombok:lombok:1.12.6"
         compile 'com.android.databinding:baseLibrary:2.1.2'
         compile 'com.android.support:recyclerview-v7:24.0.0'
@@ -143,4 +144,11 @@ android {
         compile 'com.bigkoo:convenientbanner:2.0.5'
 
     }
+}
+
+dependencies {
+    compile project(':um_sdk_library_project')
+    compile project(':live_play_library')
+    compile project(':progressdialog')
+    compile project(':alertview')
 }

@@ -26,6 +26,10 @@
 -keep class com.hyphenate.** {*;}
 -dontwarn  com.hyphenate.**
 
+#-------PLDroidPlayer 播放器混淆--------------------------------------
+-keep class com.pili.pldroid.player.** { *; }
+-keep class tv.danmaku.ijk.media.player.** {*;}
+
 #-------------------------------友盟分享登陆--------------------------
 -dontshrink
  -dontoptimize
