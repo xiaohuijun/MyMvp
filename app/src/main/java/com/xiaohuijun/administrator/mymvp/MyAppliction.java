@@ -31,6 +31,11 @@ public class MyAppliction extends Application{
     }
 
 
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
 
     @Override
     public void onCreate() {
