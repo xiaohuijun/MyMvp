@@ -145,10 +145,3 @@ android {
 
     }
 }
-
-dependencies {
-    compile project(':um_sdk_library_project')
-    compile project(':live_play_library')
-    compile project(':progressdialog')
-    compile project(':alertview')
-}
