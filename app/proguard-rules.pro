@@ -30,6 +30,15 @@
 -keep class com.pili.pldroid.player.** { *; }
 -keep class tv.danmaku.ijk.media.player.** {*;}
 
+#-------云通信---------------------------------------------------------
+-keep class com.tencent.**{*;}
+-dontwarn com.tencent.**
+
+-keep class tencent.**{*;}
+-dontwarn tencent.**
+
+-keep class qalsdk.**{*;}
+-dontwarn qalsdk.**
 #-------------------------------友盟分享登陆--------------------------
 -dontshrink
  -dontoptimize
