@@ -143,6 +143,8 @@ android {
 
         //https://github.com/saiwu-bigkoo/Android-ConvenientBanner
         compile 'com.bigkoo:convenientbanner:2.0.5'
+        //弹幕库
+        compile 'com.github.ctiao:DanmakuFlameMaster:0.5.3'
 
     }
 }
