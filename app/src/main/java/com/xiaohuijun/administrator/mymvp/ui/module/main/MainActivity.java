@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.xiaohuijun.administrator.mymvp.R;
 import com.xiaohuijun.administrator.mymvp.common.Filepicker.FilePickerConst;
 import com.xiaohuijun.administrator.mymvp.common.Filepicker.FileSelectUtils;
@@ -26,6 +27,7 @@ import com.xiaohuijun.administrator.mymvp.mvp.lce.LceView;
 import com.xiaohuijun.administrator.mymvp.presenter.User.UserPresenter;
 import com.xiaohuijun.administrator.mymvp.ui.InitInterface;
 import com.xiaohuijun.administrator.mymvp.ui.RequestPermssionCallBack;
+import com.xiaohuijun.administrator.mymvp.ui.module.common.EnCode.EnCodeActivity;
 import com.xiaohuijun.administrator.mymvp.ui.module.common.FullImageActivity;
 import com.xiaohuijun.administrator.progressdialog.svprogresshud.SVProgressHUD;
 
@@ -35,7 +37,7 @@ import butterknife.BindView;
 import rx.Subscription;
 import rx.functions.Func1;
 
-public class MainActivity extends MvpActivity implements LceView<Object>,InitInterface{
+public class MainActivity extends MvpActivity implements LceView<Object>, InitInterface {
     UserPresenter userPresenter;
     @BindView(R.id.name)
     TextView name;
@@ -56,8 +58,11 @@ public class MainActivity extends MvpActivity implements LceView<Object>,InitInt
     Button chooseImgBtn;
     @BindView(R.id.choose_doc_btn)
     Button chooseDocBtn;
+    @BindView(R.id.encode_btn)
+    Button encode_btn;
     private Subscription mRxSub, mRxSubSticky;
     private ArrayList<String> filePaths;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,8 +87,8 @@ public class MainActivity extends MvpActivity implements LceView<Object>,InitInt
 
     @Override
     public void initView() {
-        progress = new SVProgressHUD(MainActivity.this, Gravity.CENTER,false);
-        test.setOnClickListener(new View.OnClickListener(){
+        progress = new SVProgressHUD(MainActivity.this, Gravity.CENTER, false);
+        test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String[] perms = {PermissionUtils.CAMERA};
@@ -97,7 +102,7 @@ public class MainActivity extends MvpActivity implements LceView<Object>,InitInt
                     public void permissionsDenied() {
                         toastShow("授权失败,do something");
                     }
-                },R.string.rationale_camera);
+                }, R.string.rationale_camera);
 
             }
         });
@@ -110,7 +115,14 @@ public class MainActivity extends MvpActivity implements LceView<Object>,InitInt
                         .go();
             }
         });
-
+        encode_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivityUtils.from(MainActivity.this)
+                        .gotoTargetActivity(EnCodeActivity.class)
+                        .go();
+            }
+        });
         chooseImgBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -118,14 +130,14 @@ public class MainActivity extends MvpActivity implements LceView<Object>,InitInt
                 needPermssionTask(PermissionUtils.getPermissions(perms), new RequestPermssionCallBack() {
                     @Override
                     public void permissionsGranted() {
-                        FileSelectUtils.selectPhoto(filePaths,3,MainActivity.this);
+                        FileSelectUtils.selectPhoto(filePaths, 3, MainActivity.this);
                     }
 
                     @Override
                     public void permissionsDenied() {
                         toastShow("授权失败,do something");
                     }
-                },R.string.rationale_camera);
+                }, R.string.rationale_camera);
 
             }
         });
@@ -136,21 +148,21 @@ public class MainActivity extends MvpActivity implements LceView<Object>,InitInt
                 needPermssionTask(PermissionUtils.getPermissions(perms), new RequestPermssionCallBack() {
                     @Override
                     public void permissionsGranted() {
-                        FileSelectUtils.selectDocument(filePaths,3,MainActivity.this);
+                        FileSelectUtils.selectDocument(filePaths, 3, MainActivity.this);
                     }
 
                     @Override
                     public void permissionsDenied() {
                         toastShow("授权失败,do something");
                     }
-                },R.string.rationale_camera);
+                }, R.string.rationale_camera);
             }
         });
     }
 
     @Override
     public void initData() {
-         userPresenter.loadUserInfo();
+        userPresenter.loadUserInfo();
     }
 
     @Override
@@ -165,25 +177,25 @@ public class MainActivity extends MvpActivity implements LceView<Object>,InitInt
 
     @Override
     public void showContent(Object data) {
-            if (data instanceof UserInfo){
-                final UserInfo userInfo= (UserInfo) data;
-                MLog.e(userInfo.toString());
-                name.setText(userInfo.userName);
-                age.setText(userInfo.userBirthday);
-                userIcon.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        ActivityUtils.from(MainActivity.this)
-                                .gotoTargetActivity(FullImageActivity.class)
-                                .putExtra("position","1")
-                                .putExtra("picUrl",userInfo.userIco)
-                                .go();
-                    }
-                });
-                ImageLoader.load(MainActivity.this,userInfo.userIco,userIcon,R.mipmap.ic_launcher);
-                phone.setText(userInfo.userPhone);
+        if (data instanceof UserInfo) {
+            final UserInfo userInfo = (UserInfo) data;
+            MLog.e(userInfo.toString());
+            name.setText(userInfo.userName);
+            age.setText(userInfo.userBirthday);
+            userIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ActivityUtils.from(MainActivity.this)
+                            .gotoTargetActivity(FullImageActivity.class)
+                            .putExtra("position", "1")
+                            .putExtra("picUrl", userInfo.userIco)
+                            .go();
+                }
+            });
+            ImageLoader.load(MainActivity.this, userInfo.userIco, userIcon, R.mipmap.ic_launcher);
+            phone.setText(userInfo.userPhone);
 
-            }
+        }
     }
 
     @Override
@@ -191,7 +203,7 @@ public class MainActivity extends MvpActivity implements LceView<Object>,InitInt
         MLog.e(e);
     }
 
-    public void subEvent(){
+    public void subEvent() {
         RxSubscriptions.remove(mRxSub);
         mRxSub = RxBus.getDefault().toObservable(Bundle.class)
                 .map(new Func1<Bundle, Bundle>() {
@@ -219,7 +231,7 @@ public class MainActivity extends MvpActivity implements LceView<Object>,InitInt
         RxSubscriptions.add(mRxSub);
     }
 
-    public void  subEventSticky(){
+    public void subEventSticky() {
         //RxSubscriptions.remove(mRxSubSticky);
         mRxSubSticky = RxBus.getDefault().toObservableSticky(Bundle.class)
                 .map(new Func1<Bundle, Bundle>() {
@@ -253,11 +265,9 @@ public class MainActivity extends MvpActivity implements LceView<Object>,InitInt
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode)
-        {
+        switch (requestCode) {
             case FilePickerConst.REQUEST_CODE:
-                if(resultCode==RESULT_OK && data!=null)
-                {
+                if (resultCode == RESULT_OK && data != null) {
                     filePaths = data.getStringArrayListExtra(FilePickerConst.KEY_SELECTED_PHOTOS);
                     //use them anywhere
                     MLog.d(filePaths.size());

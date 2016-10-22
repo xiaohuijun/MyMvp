@@ -12,12 +12,57 @@ android {
         versionName "1.0"
         // dex突破65535的限制
         multiDexEnabled true
+        // jackOptions {
+//            enabled true
+//        }
+//        useJack true
+        ndk {
+            moduleName "NativeExample"
+            ldLibs "log", "z", "m", "jnigraphics"
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "x86_64", "mips", "mips64"
+        }
     }
+    // LinearAlloc --set-max-idx-number= 用于控制每一个 dex 的最大方法个数。
+    //--main-dex-list= 参数是一个类列表的文件，在该文件中的类会被打包在第一个 dex 中。
+//    afterEvaluate {
+//        tasks.matching {
+//            it.name.startsWith('dex')
+//        }.each { dx ->
+//            if (dx.additionalParameters == null) {
+//                dx.additionalParameters = []
+//            }
+//            dx.additionalParameters += '--set-max-idx-number=48000'
+//            dx.additionalParameters += "--main-dex-list=$projectDir/multidex.keep".toString()
+//        }
+//    }
+
+    //tasks.whenTaskAdded { task ->
+//    if (task.name.startsWith("create") && task.name.endsWith("MainDexClassList")) {
+//    if (task.name.startsWith("transformClassesWithMultidexlistFor")) {
+//        task.doLast {
+//            def flavorAndBuildType = task.name.substring("create".length(), task.name.length() - "MainDexClassList".length())
+//            def flavorAndBuildType = task.name.substring("transformClassesWithMultidexlistFor".length(), task.name.length())
+//            autoSplitDex.configure {
+//                description = flavorAndBuildType
+//            }
+//            autoSplitDex.execute()
+//        }
+//    }
+//}
 
 //执行lint检查，有任何的错误或者警告提示，都会终止构建，我们可以将其关掉。
     lintOptions {
         abortOnError false
     }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+//        additionalParameters = ["--multi-dex",
+//                                "--set-max-idx-number=20000",
+//                                "--main-dex-list=$projectDir/multidex.keep".toString(),
+//                                "--minimal-main-dex"]
+    }
+
 //签名
 //signingConfigs {
 //    debug {
@@ -83,7 +128,7 @@ android {
         compile fileTree(include: ['*.jar'], dir: 'libs')
         compile project(':alertview')
         compile project(':progressdialog')
-        compile project(':um_sdk_library_project')
+        compile project(':um_sdk_library')
         compile project(':live_play_library')
         compile project(':im_library')
         testCompile 'junit:junit:4.12'
@@ -143,6 +188,17 @@ android {
 
         //https://github.com/saiwu-bigkoo/Android-ConvenientBanner
         compile 'com.bigkoo:convenientbanner:2.0.5'
+        //弹幕库
+        compile 'com.github.ctiao:DanmakuFlameMaster:0.5.3'
 
     }
+}
+
+dependencies {
+    compile 'com.android.support:design:25.0.0'
+    compile 'com.android.support:appcompat-v7:25.0.0'
+    compile 'com.android.support:support-v4:25.0.0'
+    compile 'com.android.support:gridlayout-v7:25.0.0'
+    compile 'com.android.support:recyclerview-v7:25.0.0'
+    compile 'com.android.support:cardview-v7:25.0.0'
 }

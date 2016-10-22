@@ -1,1 +1,1 @@
-include ':app', ':alertview', ':progressdialog', ':um_sdk_library_project', ':live_play_library', ':im_library'
+include ':app', ':alertview', ':progressdialog', ':um_sdk_library', ':live_play_library', ':im_library', ':push_library'

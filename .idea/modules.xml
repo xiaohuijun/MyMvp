@@ -8,7 +8,8 @@
       <module fileurl="file://$PROJECT_DIR$/im_library/im_library.iml" filepath="$PROJECT_DIR$/im_library/im_library.iml" />
       <module fileurl="file://$PROJECT_DIR$/live_play_library/live_play_library.iml" filepath="$PROJECT_DIR$/live_play_library/live_play_library.iml" />
       <module fileurl="file://$PROJECT_DIR$/progressdialog/progressdialog.iml" filepath="$PROJECT_DIR$/progressdialog/progressdialog.iml" />
-      <module fileurl="file://$PROJECT_DIR$/um_sdk_library_project/um_sdk_library_project.iml" filepath="$PROJECT_DIR$/um_sdk_library_project/um_sdk_library_project.iml" />
+      <module fileurl="file://$PROJECT_DIR$/push_library/push_library.iml" filepath="$PROJECT_DIR$/push_library/push_library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/um_sdk_library/um_sdk_library.iml" filepath="$PROJECT_DIR$/um_sdk_library/um_sdk_library.iml" />
     </modules>
   </component>
 </project>
