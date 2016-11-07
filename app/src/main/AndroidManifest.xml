@@ -214,7 +214,8 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!-- 友盟相关end -->
         <activity android:name=".ui.module.startup.GuideActivity" />
-        <activity android:name=".DexActivity"></activity>
+        <activity android:name=".DexActivity" />
+        <activity android:name=".ui.module.loginandregister.LoginActivity"></activity>
     </application>
 
 </manifest>

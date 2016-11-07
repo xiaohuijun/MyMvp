@@ -6,6 +6,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 
+import com.xiaohuijun.administrator.mymvp.MyAppliction;
+import com.xiaohuijun.administrator.mymvp.common.AppSharePref;
+import com.xiaohuijun.administrator.mymvp.ui.module.loginandregister.LoginActivity;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -33,8 +37,8 @@ public class ActivityUtils {
         return instance;
     }
 
-    public ActivityUtils gotoTargetActivity(Class ActivityClass){
-        in = new Intent(activity,ActivityClass);
+    public ActivityUtils gotoTargetActivity(Class activityClass){
+        in = new Intent(activity,activityClass);
         return instance;
     }
 
@@ -42,10 +46,35 @@ public class ActivityUtils {
         activity.startActivity(in);
     }
 
+    public void goFinish(){
+        activity.startActivity(in);
+        activity.finish();
+    }
+
+    public void goFinishActivityList(ArrayList<Class> activityClassList){
+        activity.startActivity(in);
+        for (Class activityClass :activityClassList) {
+            AppManager.getAppManager().finishActivity(activityClass);;
+        }
+    }
+
+    public void goFinishAll(){
+        AppManager.getAppManager().finishAllActivity();
+        activity.startActivity(in);
+    }
+
     public void goForResult(int requestCode){
         activity.startActivityForResult(in,requestCode);
     }
 
+    public ActivityUtils gotoTargetActivityIsNeedLogin(Class ActivityClass){
+        if(!(boolean)SPUtils.get(activity,AppSharePref.IS_LOGIN,false)){
+            in = new Intent(activity, LoginActivity.class);
+        }else{
+            in = new Intent(activity,ActivityClass);
+        }
+        return instance;
+    }
 
     public ActivityUtils setAction(String action){
         in.setAction(action);
