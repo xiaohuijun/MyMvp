@@ -17,6 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xiaohuijun.administrator.mymvp.R;
+import com.xiaohuijun.administrator.mymvp.common.toastcompat.ToastCompat;
+import com.xiaohuijun.administrator.mymvp.common.util.AppManager;
 import com.xiaohuijun.administrator.mymvp.common.util.MLog;
 
 import java.util.List;
@@ -37,6 +39,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         super.setContentView(layoutResID);
         ButterKnife.bind(this);
         mActivity = this;
+        AppManager.getAppManager().addActivity(this);
     }
 
 
@@ -45,6 +48,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         super.setContentView(view);
         ButterKnife.bind(this);
         mActivity = this;
+        AppManager.getAppManager().addActivity(this);
     }
 
     @Override
@@ -52,7 +56,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         super.setContentView(view, params);
         ButterKnife.bind(this);
         mActivity = this;
-
+        AppManager.getAppManager().addActivity(this);
     }
 
     @Override
@@ -65,6 +69,12 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     protected void onDestroy() {
         onUnsubscribe();
         super.onDestroy();
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        AppManager.getAppManager().rmoveActivity(this);
     }
 
     private CompositeSubscription mCompositeSubscription;
@@ -96,6 +106,21 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         toolbar_title.setText(title);
         return toolbar;
     }
+
+    public Toolbar initToolBar(String title,int imgRight){
+        Toolbar toolbar = initToolBar();
+        TextView toolbar_title = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        toolbar_title.setText(title);
+        return toolbar;
+    };
+
+    public Toolbar initToolBar(String title,View viewRight){
+        Toolbar toolbar = initToolBar();
+        TextView toolbar_title = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        toolbar_title.setText(title);
+        return toolbar;
+    };
+
     public Toolbar initToolBar() {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -125,11 +150,11 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void toastShow(int resId) {
-        Toast.makeText(mActivity, resId, Toast.LENGTH_SHORT).show();
+        ToastCompat.makeText(mActivity,mActivity.getString(resId) , Toast.LENGTH_SHORT).show();
     }
 
     public void toastShow(String resId) {
-        Toast.makeText(mActivity, resId, Toast.LENGTH_SHORT).show();
+        ToastCompat.makeText(mActivity, resId, Toast.LENGTH_SHORT).show();
     }
 
 

@@ -6,9 +6,6 @@ import android.content.pm.ApplicationInfo;
 import android.os.Build;
 import android.util.Log;
 import android.view.View;
-
-import com.java02014.framework.utils.AppManager;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 

@@ -7,4 +7,6 @@ public interface InitInterface {
     public void initView();
 
     public void initData();
+
+    public void setViewListener();
 }

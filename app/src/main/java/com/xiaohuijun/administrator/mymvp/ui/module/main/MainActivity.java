@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.tencent.openqq.protocol.imsdk.msg;
 import com.xiaohuijun.administrator.mymvp.R;
 import com.xiaohuijun.administrator.mymvp.common.Filepicker.FilePickerConst;
 import com.xiaohuijun.administrator.mymvp.common.Filepicker.FileSelectUtils;
@@ -62,6 +63,10 @@ public class MainActivity extends MvpActivity implements LceView<Object>, InitIn
     Button encode_btn;
     private Subscription mRxSub, mRxSubSticky;
     private ArrayList<String> filePaths;
+
+    @BindView(R.id.bind_text1)
+    TextView bindText1;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -163,6 +168,11 @@ public class MainActivity extends MvpActivity implements LceView<Object>, InitIn
     @Override
     public void initData() {
         userPresenter.loadUserInfo();
+    }
+
+    @Override
+    public void setViewListener() {
+
     }
 
     @Override

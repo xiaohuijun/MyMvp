@@ -45,6 +45,13 @@ public class AppManager {
     }
 
     /**
+     * 从堆栈中移除Activity
+     * @param activity
+     */
+    public void rmoveActivity(Activity activity){
+        activityStack.removeElement(activity);
+    }
+    /**
      * 获取当前Activity（堆栈中最后一个压入的）
      */
     public Activity currentActivity() {
