@@ -48,7 +48,7 @@ public class ActivityUtils {
 
     public void goFinish(){
         activity.startActivity(in);
-        activity.finish();
+        AppManager.getAppManager().finishActivity(activity.getClass());
     }
 
     public void goFinishActivityList(ArrayList<Class> activityClassList){

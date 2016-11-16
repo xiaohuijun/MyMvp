@@ -19,4 +19,5 @@ public interface DataRepository {
     Observable<BaseResponse<UserInfo>> getUserInfo(Map<String,String> body);
 
     Observable<BaseResponse<UserList>> getUserList(Map<String,String> body);
+
 }

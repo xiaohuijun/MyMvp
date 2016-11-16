@@ -2,6 +2,7 @@ package com.xiaohuijun.administrator.mymvp.data.remote.rx;
 
 
 import com.xiaohuijun.administrator.mymvp.common.util.MLog;
+import com.xiaohuijun.administrator.mymvp.data.remote.response.BaseResponse;
 
 import org.json.JSONException;
 
@@ -14,6 +15,7 @@ import rx.Subscriber;
  * @email: xiaohuijun1992@163.com
  */
 public abstract class ResponseObserver<T> extends Subscriber<T>{
+    private static final int SUCCESS_CODE = 0;
     @Override
     public void onCompleted() {
         MLog.d("onCompleted");
@@ -41,6 +43,14 @@ public abstract class ResponseObserver<T> extends Subscriber<T>{
 
     @Override
     public void onNext(T t) {
+        //这里做数据返回码统一处理
+        if(t instanceof BaseResponse){
+            BaseResponse baseResponse = (BaseResponse) t;
+            if(baseResponse.ret != SUCCESS_CODE){
+                onError(baseResponse.message);
+                return;
+            }
+        }
         onSuccess(t);
     }
 

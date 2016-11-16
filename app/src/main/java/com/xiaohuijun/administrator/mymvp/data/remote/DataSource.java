@@ -4,11 +4,17 @@ import com.xiaohuijun.administrator.mymvp.data.DataRepository;
 import com.xiaohuijun.administrator.mymvp.data.model.UserInfo;
 import com.xiaohuijun.administrator.mymvp.data.model.UserList;
 import com.xiaohuijun.administrator.mymvp.data.remote.response.BaseResponse;
+import com.xiaohuijun.administrator.mymvp.data.remote.rx.ResponseObserver;
 import com.xiaohuijun.administrator.mymvp.data.remote.service.ApiService;
+import com.xiaohuijun.administrator.mymvp.data.remote.service.RequestParams;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
+import rx.schedulers.Schedulers;
 
 /**
  * @author: xiaohuijun
@@ -18,6 +24,7 @@ import rx.Observable;
 public class DataSource implements DataRepository{
     private ApiService myService;
     private static DataSource sInstance;
+    private Map<String,String> body = new HashMap<>();
     public DataSource(){
         myService = RetrofitBuilder.build().create(ApiService.class);
     }

@@ -215,7 +215,12 @@
         <!-- 友盟相关end -->
         <activity android:name=".ui.module.startup.GuideActivity" />
         <activity android:name=".DexActivity" />
-        <activity android:name=".ui.module.loginandregister.LoginActivity"></activity>
+        <activity android:name=".ui.module.loginandregister.LoginActivity" />
+        <activity android:name=".ui.module.main.Main3Activity" />
+
+        <service
+            android:name=".InitIntentService"
+            android:exported="false"></service>
     </application>
 
 </manifest>

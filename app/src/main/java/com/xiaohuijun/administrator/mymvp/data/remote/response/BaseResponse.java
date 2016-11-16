@@ -1,5 +1,6 @@
 package com.xiaohuijun.administrator.mymvp.data.remote.response;
 
+
 /**
  * @author: xiaohuijun
  * @date: 2016/8/1

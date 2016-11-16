@@ -1,5 +1,6 @@
 package com.xiaohuijun.administrator.mymvp.data.remote;
 
+import com.google.gson.GsonBuilder;
 import com.xiaohuijun.administrator.mymvp.data.remote.service.ApiService;
 
 import retrofit2.Retrofit;
@@ -18,12 +19,16 @@ public class RetrofitBuilder {
         if (mRetrofit != null) {
             return mRetrofit;
         }
+        GsonConverterFactory gsonConverterFactory = GsonConverterFactory.create(
+                new GsonBuilder()
+                        .registerTypeAdapterFactory(MyGosnFactory.create())
+                        .create());
 
         mRetrofit = new Retrofit.Builder()
                 .baseUrl(ApiService.BASE_URL)
                 .client(HttpClientBuilder.build())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(gsonConverterFactory)
                 .build();
 
         return mRetrofit;

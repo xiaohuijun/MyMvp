@@ -6,6 +6,7 @@ import android.os.Handler;
 
 import com.xiaohuijun.administrator.mymvp.R;
 import com.xiaohuijun.administrator.mymvp.common.util.ActivityUtils;
+import com.xiaohuijun.administrator.mymvp.common.util.AppManager;
 import com.xiaohuijun.administrator.mymvp.ui.module.main.MainActivity;
 
 /**
@@ -18,17 +19,17 @@ public class LoadingActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppManager.getAppManager().addActivity(this);
         //延迟加载加过场动画解决6.0页面闪的问题
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 ActivityUtils.from(LoadingActivity.this)
                         .gotoTargetActivity(MainActivity.class)
-                        .go();
-                finish();
+                        .goFinish();
                 overridePendingTransition(R.anim.stand,R.anim.splash);
             }
-        },1);
+        },1000);
 
     }
 }

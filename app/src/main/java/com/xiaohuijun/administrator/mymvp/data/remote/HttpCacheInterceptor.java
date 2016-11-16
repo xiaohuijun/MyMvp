@@ -4,6 +4,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.xiaohuijun.administrator.mymvp.MyAppliction;
+import com.xiaohuijun.administrator.mymvp.common.toastcompat.ToastCompat;
 import com.xiaohuijun.administrator.mymvp.common.util.NetWorkHelper;
 
 import java.io.IOException;
@@ -25,7 +26,7 @@ public class HttpCacheInterceptor implements Interceptor {
             request = request.newBuilder()
                     .cacheControl(CacheControl.FORCE_CACHE)
                     .build();
-            Toast.makeText(MyAppliction.getContext(),"网络连接异常",Toast.LENGTH_SHORT).show();
+            ToastCompat.makeText(MyAppliction.getContext(),"网络连接异常",Toast.LENGTH_SHORT).show();
             Log.d("com.android.core", "no network");
         }
 
