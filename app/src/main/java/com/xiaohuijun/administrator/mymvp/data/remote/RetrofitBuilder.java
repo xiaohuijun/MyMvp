@@ -30,7 +30,6 @@ public class RetrofitBuilder {
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(gsonConverterFactory)
                 .build();
-
         return mRetrofit;
     }
 }
