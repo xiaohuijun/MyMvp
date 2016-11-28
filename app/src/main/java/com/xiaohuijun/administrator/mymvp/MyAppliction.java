@@ -11,6 +11,9 @@ import android.os.Environment;
 import android.support.multidex.MultiDex;
 
 import com.umeng.socialize.PlatformConfig;
+import com.xiaohuijun.administrator.mymvp.dagger2.component.AppComponent;
+import com.xiaohuijun.administrator.mymvp.dagger2.component.DaggerAppComponent;
+import com.xiaohuijun.administrator.mymvp.dagger2.moudle.AppModule;
 
 import java.io.File;
 import java.io.IOException;
@@ -157,6 +160,7 @@ public class MyAppliction extends Application {
         }
         context = getApplicationContext();
         InitIntentService.startActionInit(context);
+        initDagger();
 //
 //        //友盟分享配置
 //        PlatformConfig.setWeixin("wx967daebe835fbeac", "5bb696d9ccd75a38c8a0bfe0675559b3");
@@ -172,5 +176,16 @@ public class MyAppliction extends Application {
 
     public static Context getContext() {
         return context;
+    }
+
+    private AppComponent appComponent;
+
+    private void initDagger(){
+        appComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
+
+    }
+
+    public AppComponent getAppComponent(){
+        return appComponent;
     }
 }

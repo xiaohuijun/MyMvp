@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tencent.openqq.protocol.imsdk.msg;
+import com.xiaohuijun.administrator.mymvp.MyAppliction;
 import com.xiaohuijun.administrator.mymvp.R;
 import com.xiaohuijun.administrator.mymvp.common.Filepicker.FilePickerConst;
 import com.xiaohuijun.administrator.mymvp.common.Filepicker.FileSelectUtils;
@@ -20,6 +21,10 @@ import com.xiaohuijun.administrator.mymvp.common.RxBus.helper.RxSubscriptions;
 import com.xiaohuijun.administrator.mymvp.common.util.ActivityUtils;
 import com.xiaohuijun.administrator.mymvp.common.util.MLog;
 import com.xiaohuijun.administrator.mymvp.common.util.PermissionUtils;
+import com.xiaohuijun.administrator.mymvp.dagger2.component.AppComponent;
+import com.xiaohuijun.administrator.mymvp.dagger2.component.DaggerMainComponent;
+import com.xiaohuijun.administrator.mymvp.dagger2.moudle.ActivityModule;
+import com.xiaohuijun.administrator.mymvp.dagger2.moudle.MainModule;
 import com.xiaohuijun.administrator.mymvp.data.RepositoryFactory;
 import com.xiaohuijun.administrator.mymvp.data.model.UserInfo;
 import com.xiaohuijun.administrator.mymvp.mvp.MvpActivity;
@@ -34,11 +39,14 @@ import com.xiaohuijun.administrator.progressdialog.svprogresshud.SVProgressHUD;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import rx.Subscription;
 import rx.functions.Func1;
 
 public class MainActivity extends MvpActivity implements LceView<Object>, InitInterface {
+    @Inject
     UserPresenter userPresenter;
     @BindView(R.id.name)
     TextView name;
@@ -67,7 +75,8 @@ public class MainActivity extends MvpActivity implements LceView<Object>, InitIn
     @BindView(R.id.bind_text1)
     TextView bindText1;
 
-
+    @BindView(R.id.tv_rv)
+    TextView tvRv;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +84,7 @@ public class MainActivity extends MvpActivity implements LceView<Object>, InitIn
         initToolBar("main");
         initView();
         subEvent();
+        initDagger();
     }
 
     @Override
@@ -86,8 +96,17 @@ public class MainActivity extends MvpActivity implements LceView<Object>, InitIn
     @NonNull
     @Override
     public MvpPresenter createPresenter() {
-        userPresenter = new UserPresenter(RepositoryFactory.getDataRepository());
+        //userPresenter = new UserPresenter(RepositoryFactory.getDataRepository());
         return userPresenter;
+    }
+
+    private void initDagger(){
+        AppComponent appComponent = ((MyAppliction)getApplication()).getAppComponent();
+        DaggerMainComponent.builder()
+                .activityModule(new ActivityModule(this))
+                 .mainModule(new MainModule(this))
+                .appComponent(appComponent)
+                 .build().inject(this);
     }
 
     @Override
@@ -161,6 +180,15 @@ public class MainActivity extends MvpActivity implements LceView<Object>, InitIn
                         toastShow("授权失败,do something");
                     }
                 }, R.string.rationale_camera);
+            }
+        });
+
+        tvRv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivityUtils.from(MainActivity.this)
+                        .gotoTargetActivity(Main4Activity.class)
+                        .go();
             }
         });
     }
